@@ -15,13 +15,23 @@ public:
     explicit MainGame(QObject *parent = 0);
     ~MainGame();
 
+    Q_PROPERTY(quint8 lives READ getLives NOTIFY livesChanged)
+
 signals:
     void GameEnded();
+    void livesChanged();
 
 public slots:
     void roundElapsed();
     void startGame();
     void stopGame();
+    quint8 getLives();
+
+    void liveUp();
+    void liveDown();
+
+    void leftPressed();
+    void rightPressed();
 
 
 private:
@@ -31,6 +41,8 @@ private:
     QTimer* mainTimer;
     quint8 roundNumber;
     quint8 maxRounds;
+
+    quint8 lives;
 
 };
 
