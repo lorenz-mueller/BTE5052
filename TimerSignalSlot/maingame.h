@@ -1,9 +1,12 @@
 #ifndef MAINGAME_H
 #define MAINGAME_H
 
+
 #include <QObject>                                  //Include QObject so the type is known
 #include <QTimer>
 #include <QDebug>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 class MainGame : public QObject                     //Inherit from QObject
 {
@@ -16,11 +19,15 @@ signals:
     void GameEnded();
 
 public slots:
-    void RoundElapsed();
-    void StartGame();
+    void roundElapsed();
+    void startGame();
+    void stopGame();
 
 
 private:
+    QQmlApplicationEngine* engine;
+
+
     QTimer* mainTimer;
     quint8 roundNumber;
     quint8 maxRounds;
