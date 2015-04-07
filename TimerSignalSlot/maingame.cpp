@@ -11,7 +11,7 @@ MainGame::MainGame(QObject *parent) : QObject(parent)
     lives = 0;
 
     roundTimer = new QTimer(this);   // Create a new timer and make it a child of MainGame
-    roundTimer->setInterval(3000);   // set interval in ms
+    roundTimer->setInterval(2000);   // set interval in ms
 
     itemTimer = new QTimer(this);
     itemTimer->setInterval(10);
@@ -20,7 +20,6 @@ MainGame::MainGame(QObject *parent) : QObject(parent)
     //Signal Slot connection. Must be SIGNAL SLOT or Signal Signal.
     //Number, order and type of arguments must match.
     connect(roundTimer,SIGNAL(timeout()),this,SLOT(roundElapsed()));
-    connect(this,SIGNAL(GameEnded()),this,SLOT(stopGame()));
     connect(itemTimer,SIGNAL(timeout()),this,SLOT(updatePlayFieldItems()));
 
     //create a new QmlApplication engine and expose context properties
@@ -38,7 +37,7 @@ void MainGame::startGame(){
     roundTimer->start();
     itemTimer->start();
     roundNumber = 0;
-    lives = 3;
+    lives = 15;
     populateEnemies();
     emit livesChanged();
 
@@ -68,7 +67,7 @@ void MainGame::liveDown(){
         lives --;
         emit livesChanged();
      }else{
-        emit GameEnded();
+        stopGame();
     }
 }
 
@@ -85,13 +84,20 @@ void MainGame::roundElapsed(){
     populateEnemies();
     if(roundNumber < maxRounds){
         roundNumber++;
+    }else{
+        stopGame();
     }
 }
 
 void MainGame::populateEnemies(){
     for(int i=0;i<3;i++){
+
         PlayfieldItem* enemy = new PlayfieldItem(this,"pictures/Attacker.png");
+
         connect(itemTimer,SIGNAL(timeout()),enemy,SLOT(timerSlot()));
+        connect(enemy,SIGNAL(bottomReached()),this,SLOT(liveDown()));
+        connect(enemy,SIGNAL(itemDestroyed(QObject*)),this,SLOT(removeEnemy(QObject*)));
+
         Enemies.append(enemy);
      }
 
@@ -100,11 +106,15 @@ void MainGame::populateEnemies(){
 void MainGame::updatePlayFieldItems(){
     engine->rootContext()->setContextProperty("enemies", QVariant::fromValue(Enemies));
     engine->rootContext()->setContextProperty("gifts", QVariant::fromValue(Gifts));
-
-    qDebug() << " number of enemies: " << Enemies.size();
-
 }
 
+void MainGame::removeEnemy(QObject* enemy){
+    qDebug() << " remove enemy now: " << enemy;
+    Enemies.removeOne(enemy);
+    updatePlayFieldItems();
+    enemy->deleteLater();
+
+}
 
 MainGame::~MainGame()
 {

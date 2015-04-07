@@ -17,6 +17,7 @@ Rectangle{
        }
 
     Button{
+        anchors.centerIn: parent
         text: qsTr("Start Game");
         onClicked: {
             mainGame.startGame();

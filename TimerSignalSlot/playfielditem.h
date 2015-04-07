@@ -20,11 +20,13 @@ public:
     Q_PROPERTY(double yOrdinate READ getY NOTIFY yChanged)
     Q_PROPERTY(QString icon READ getIcon NOTIFY iconChanged)
 
+
 signals:
     void xChanged();
     void yChanged();
     void iconChanged();
-
+    void bottomReached();
+    void itemDestroyed(QObject*);
 
 public slots:
    void timerSlot();
@@ -34,7 +36,7 @@ private:
     double y;
     double speed;
     QString icon;
-
+    bool isActive;
 };
 
 #endif // PLAYFIELDITEM_H

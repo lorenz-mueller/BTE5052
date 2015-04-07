@@ -36,6 +36,7 @@ public slots:
 
     void populateEnemies();
     void updatePlayFieldItems();
+    void removeEnemy(QObject* enemy);
 
 private:
     QQmlApplicationEngine* engine;

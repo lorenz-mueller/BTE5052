@@ -6,14 +6,22 @@ PlayfieldItem::PlayfieldItem(QObject *parent, QString icon) : QObject(parent)
     y = 0;
     speed=0.001;
     this->icon = icon;
-
+    isActive = true;
 
 }
 
 void PlayfieldItem::timerSlot(){
-    y=y+speed;
-    emit yChanged();
-    //qDebug() << " Playfield item at: " << getX();
+    if(isActive){
+        y=y+speed;
+
+        if(y > .9){
+            isActive=false;
+            emit bottomReached();
+            emit itemDestroyed(this);
+        }
+
+        emit yChanged();
+    }
 }
 
 double PlayfieldItem::getX(){
@@ -31,6 +39,6 @@ QString PlayfieldItem::getIcon(){
 
 PlayfieldItem::~PlayfieldItem()
 {
-
+    qDebug() << "Playfield item " << this << " got destroyed. ";
 }
 

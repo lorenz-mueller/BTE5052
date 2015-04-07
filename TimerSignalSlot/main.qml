@@ -26,5 +26,14 @@ ApplicationWindow {
         visible: true
     }
 
+    EndScreen{
+        id: endScreen
+        visible: false
+    }
+
+    Component.onCompleted: {
+        mainGame.GameEnded.connect(BasicLogic.showEndScreen);
+    }
+
  }
 

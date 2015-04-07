@@ -7,5 +7,6 @@
         <file>pictures/Attacker.png</file>
         <file>pictures/startBackground.jpg</file>
         <file>pictures/defender.png</file>
+        <file>EndScreen.qml</file>
     </qresource>
 </RCC>
