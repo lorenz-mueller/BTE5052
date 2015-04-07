@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include "playfielditem.h"
 
 class MainGame : public QObject                     //Inherit from QObject
 {
@@ -33,16 +34,23 @@ public slots:
     void leftPressed();
     void rightPressed();
 
+    void populateEnemies();
+    void updatePlayFieldItems();
 
 private:
     QQmlApplicationEngine* engine;
 
 
-    QTimer* mainTimer;
+    QTimer* roundTimer;
+    QTimer* itemTimer;
+
     quint8 roundNumber;
     quint8 maxRounds;
 
     quint8 lives;
+
+    QList<QObject*> Enemies;
+    QList<QObject*> Gifts;
 
 };
 

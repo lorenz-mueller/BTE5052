@@ -4,5 +4,8 @@
         <file>GameScreen.qml</file>
         <file>StartScreen.qml</file>
         <file>BasicLogic.js</file>
+        <file>pictures/Attacker.png</file>
+        <file>pictures/startBackground.jpg</file>
+        <file>pictures/defender.png</file>
     </qresource>
 </RCC>
