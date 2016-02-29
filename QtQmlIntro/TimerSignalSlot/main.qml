@@ -8,10 +8,10 @@ import "BasicLogic.js" as BasicLogic
 ApplicationWindow {
 
     title: qsTr("Qt / QML introduction")
-    //width: 640
-    //height: 480
-    width: Screen.width;
-    height: Screen.height;
+    width: 640
+    height: 480
+    //width: Screen.width;
+    //height: Screen.height;
 
     visible: true
 
